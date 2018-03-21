@@ -14,7 +14,7 @@
             liste.appendChild(li);
             localStorage.setItem(index, tache);
             index +=1;
-            limitStorage(index);
+            fixeLimitStorage(index);
         }
     }
 
@@ -32,13 +32,22 @@
 
     // Recharge les données de la liste
     function loadData(){
+        var data = [];
         if(localStorage.length != 0){
+            // Récupere le dernier indice de la localStorage
+            if(localStorage.getItem("index") != null){
+                index = localStorage.getItem("index");
+            }
+            // Récupére tous les items du data storage
             for(var i=0; i < localStorage.length; i++){
+                data[i] = localStorage.getItem(i);
+            }
+            for(var j=0; j < data.length; j++) {
                 var li = document.createElement('li');
                 // Ajoute un id
-                li.setAttribute("id",localStorage[i]);
+                li.setAttribute("id",localStorage[j]);
                 console.log(localStorage);
-                li.innerText = localStorage.getItem(localStorage[i]);
+                li.innerText = data[j];
                 li.innerHTML += ' <button onclick="supprimeTache(this.parentNode);">Supprimer</button>';
                 liste.appendChild(li);
             }
@@ -51,6 +60,6 @@
         }
     }
     // Enrigistre le dernier index du localstorage
-    function limitStorage(id) {
+    function fixeLimitStorage(id) {
         localStorage.setItem("index",id);
     }
